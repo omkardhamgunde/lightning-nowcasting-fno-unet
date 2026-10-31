@@ -1,3 +1,5 @@
-# Select the CPU or CUDA wheel for torch using the README installation commands.
-torch==2.7.1
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.7.1+cpu; sys_platform != "darwin"
+torch==2.7.1; sys_platform == "darwin"
 numpy==1.26.4
+matplotlib==3.9.4

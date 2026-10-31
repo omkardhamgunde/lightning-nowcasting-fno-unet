@@ -1,17 +1,31 @@
-name: CPU sample workflow
+name: Run the real sample
 on: [push, pull_request, workflow_dispatch]
 permissions:
   contents: read
 jobs:
   sample:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
           cache: pip
-      - run: python -m pip install torch==2.7.1 --index-url https://download.pytorch.org/whl/cpu
-      - run: python -m pip install numpy==1.26.4
-      - run: python -m unittest discover -s tests -v
-      - run: python demo.py
+      - run: python -m pip install -r requirements.txt
+      - run: python run_model.py
+      - name: Compare with the saved reference
+        run: |
+          curl --fail --location --output reference.npz https://raw.githubusercontent.com/omkardhamgunde/lightning-nowcasting-fno-unet/v1.0.0/samples/expected_prediction.npz
+          python - <<'PY'
+          import hashlib
+          import numpy as np
+          assert hashlib.sha256(open('model.py', 'rb').read()).hexdigest() == '41160b2828c2ce3e965e6d3bb034dae0e643c4ca43a60afe6632943740662e98'
+          with np.load('output/prediction.npz', allow_pickle=False) as actual, np.load('reference.npz', allow_pickle=False) as reference:
+              assert actual['probability'].shape == reference['probability'].shape == (2, 1, 129, 135)
+              error = np.abs(actual['probability'].astype(float) - reference['probability'].astype(float))
+              assert error.max() <= 0.0005 and error.mean() <= 0.000005
+              np.testing.assert_array_equal(actual['binary'], reference['binary'])
+              np.testing.assert_array_equal(actual['target_times'], reference['target_times'])
+              print('Real-sample predictions verified; maximum probability difference:', error.max())
+          PY

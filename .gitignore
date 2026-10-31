@@ -3,10 +3,9 @@ __pycache__/
 .venv/
 .env
 .env.*
-outputs/
-checkpoints/*.pt
+*.pt
+*.pending
+output*/
 sample_assets/
 .lightning-assets-*/
-*.pending*
 *.zip
-.DS_Store
