@@ -2,7 +2,7 @@
 
 Code and command-line workflows for a corrected two-band Fourier Neural Operator and U-Net hybrid trained with standard binary cross-entropy (BCE).
 
-**Available now:** exact corrected-model source, normalization/grid configuration, a small synthetic sample, a CPU demo, training/inference scripts and automated checks. **Pending:** export and attachment of the trained epoch-3 weights and a small real-data input sample. The synthetic demo runs immediately; it is not a scientific lightning forecast. See [trained weights](checkpoints/README.md).
+**Available:** exact corrected-model source, normalization/grid configuration, [two real input/target samples](samples/real_sample.npz), the [trained epoch-3 weights and reference predictions](https://github.com/omkardhamgunde/lightning-nowcasting-fno-unet/releases/tag/v1.0.0), training/inference scripts and automated checks. A separate synthetic demo is also supplied; it is not a scientific lightning forecast.
 
 ## Run the small demo
 
@@ -44,7 +44,15 @@ For an NVIDIA GPU matching the recorded CUDA build, install `torch==2.7.1` from 
 
 ## Run the trained research model
 
-This command becomes runnable after the verified sample assets are attached. Do not replace missing weights with random initialization.
+Download and verify the weights/sample bundle once (~572 MB compressed):
+
+```bash
+python -m scripts.download_assets --output sample_assets
+```
+
+Alternatively, download `reviewer_sample_assets.zip` from [release v1.0.0](https://github.com/omkardhamgunde/lightning-nowcasting-fno-unet/releases/tag/v1.0.0) and install the local archive with `python -m scripts.download_assets --archive /path/to/reviewer_sample_assets.zip --output sample_assets`. The downloader checks the archive, checkpoint and sample SHA256 values and never overwrites an existing asset folder.
+
+Run the saved trained model:
 
 ```bash
 python predict.py --input sample_assets/real_sample.npz --checkpoint sample_assets/corrected_bce_epoch3.pt --config configs/corrected_bce.json --output outputs/real_sample --device auto
@@ -57,11 +65,13 @@ python predict.py --input sample_assets/real_sample.npz --checkpoint sample_asse
 
 Sample metrics cover only the supplied hours. They are **not** the paper's full-test results. The model predicts whether lightning occurs in a cell-hour; it does not predict individual flash counts or flash-rate density.
 
-Once the assets are available, verify the sample against the exported reference prediction:
+Verify the sample against the exported HPC reference prediction:
 
 ```bash
 python -m scripts.verify_sample --assets sample_assets --device cpu
 ```
+
+The released Windows CPU checks reproduced all binary predictions at > 0.30, with maximum probability difference 0.00021869 from the H100 reference. CPU/GPU probabilities are checked using documented numerical bounds rather than claimed to be bitwise identical. See [sample verification and tolerances](docs/SAMPLE_VERIFICATION.md). The two real targets are 13 July 2023 at 03:00 and 04:00, using the original source timestamps.
 
 ## Inputs
 
@@ -105,7 +115,7 @@ The public exporter requires explicit source paths and verifies the existing che
 python -m scripts.export_hpc_assets --cache /path/to/preprocessed_lightning_data.pt --checkpoint /path/to/best_epoch_0003.pt --model-source /path/to/corrected_bce/model.py --output /new/path/reviewer_assets --device cuda
 ```
 
-For this project's IITM execution, only nodes **iitm-ai-01** and **iitm-ai-02** are permitted. The project-specific terminal launcher supplied separately pins node 02 and checks the runtime host. An asset download URL will be added only after the files have actually been exported and verified.
+For this project's IITM execution, only nodes **iitm-ai-01** and **iitm-ai-02** are permitted. The project-specific terminal launcher supplied separately pins node 02 and checks the runtime host. The verified assets from this export are attached to release v1.0.0.
 
 ## Attribution
 

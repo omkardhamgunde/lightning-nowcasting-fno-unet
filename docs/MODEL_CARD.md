@@ -23,7 +23,7 @@ The legacy cache has 40,363 retained hours, producing 40,359 original windows sp
 - Weather scaling was retained from the original full cache for compatibility, not recomputed from training inputs only. The fixed values and units are in `configs/normalization.json`.
 - CP is missing from the original 2021–2022 source files and is standardized zero in those cached years. The original timeline has gaps; the archived full-test benchmark includes gap-containing windows.
 - This test period has been inspected in earlier experiments. Single-seed differences do not establish operational superiority. ERA5 reanalysis inputs do not demonstrate a real-time deployment pipeline.
-- The synthetic demo has random weights and artificial data. The real sample, when available, uses two consecutive-hour targets; it cannot reproduce full-test aggregate scores by itself.
+- The synthetic demo has random weights and artificial data. The released real sample uses two consecutive-hour targets; it cannot reproduce full-test aggregate scores by itself.
 
 ## Artifact identities
 
@@ -31,4 +31,4 @@ Corrected model source SHA256: `41160b2828c2ce3e965e6d3bb034dae0e643c4ca43a60afe
 
 Selected epoch-3 checkpoint SHA256: `7990dbe199157499d4a70da37eb7e486b6980ad5404f91d6d438033e00b55ce6`.
 
-The weights/real-sample assets have not yet been attached. Download instructions must not claim they are available until the export, checksum check and sample inference have completed.
+The exact weights, real sample, configuration and reference arrays are attached to [release v1.0.0](https://github.com/omkardhamgunde/lightning-nowcasting-fno-unet/releases/tag/v1.0.0). Checksums and local trained-model inference were verified. See [sample verification](SAMPLE_VERIFICATION.md) for explicit numerical tolerances and the exact binary comparison.

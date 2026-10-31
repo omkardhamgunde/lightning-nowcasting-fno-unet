@@ -1,0 +1,15 @@
+{
+  "tag": "v1.0.0",
+  "release_url": "https://github.com/omkardhamgunde/lightning-nowcasting-fno-unet/releases/tag/v1.0.0",
+  "archive_url": "https://github.com/omkardhamgunde/lightning-nowcasting-fno-unet/releases/download/v1.0.0/reviewer_sample_assets.zip",
+  "archive_sha256": "7d2138a74338225021e97a22db85a60700c3664817e953ffb07379fd86b38e67",
+  "archive_bytes": 572368067,
+  "checkpoint_sha256": "7990dbe199157499d4a70da37eb7e486b6980ad5404f91d6d438033e00b55ce6",
+  "real_sample_url": "https://github.com/omkardhamgunde/lightning-nowcasting-fno-unet/releases/download/v1.0.0/real_sample.npz",
+  "real_sample_bytes": 2079584,
+  "verification": {
+    "maximum_absolute_probability_error": 0.0005,
+    "maximum_mean_probability_error": 0.000005,
+    "require_exact_binary_at_0p30": true
+  }
+}
