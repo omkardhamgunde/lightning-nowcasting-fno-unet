@@ -1,0 +1,20 @@
+{
+  "model": "corrected two-band FNO–U-Net with standard unweighted BCE",
+  "selected_epoch": 3,
+  "selection": "minimum validation BCE",
+  "threshold": 0.3,
+  "operator": ">",
+  "windows": 4036,
+  "grid": [129, 135],
+  "total_grid_cell_hours": 70286940,
+  "counts": {"TP": 229820, "TN": 69565738, "FP": 222297, "FN": 269085},
+  "metrics": {
+    "CSI": 0.31866245517898845,
+    "POD": 0.46064882091780074,
+    "FAR": 0.4916802509084929,
+    "MCC": 0.4803905202004979,
+    "Pattern_Correlation": 0.5570729617360899
+  },
+  "checkpoint_sha256": "7990dbe199157499d4a70da37eb7e486b6980ad5404f91d6d438033e00b55ce6",
+  "scope": "Previously measured full legacy test benchmark; not recalculated by the bundled synthetic demo or two-window real sample"
+}

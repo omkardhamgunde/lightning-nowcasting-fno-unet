@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+.venv/
+.env
+.env.*
+outputs/
+checkpoints/*.pt
+samples/real_sample.npz
+samples/real_sample_manifest.json
+samples/expected_prediction.npz
+sample_assets/
+*.pending*
+*.zip
+.DS_Store
